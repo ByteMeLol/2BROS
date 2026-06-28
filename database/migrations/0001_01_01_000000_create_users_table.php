@@ -18,7 +18,6 @@ return new class extends Migration
         $table->foreignId('company_id')->nullable()->index();
         $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
         $table->foreignId('role_id')->nullable()->index();
-        $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
         $table->string('first_name');
         $table->string('last_name');
         $table->string('email')->unique();
