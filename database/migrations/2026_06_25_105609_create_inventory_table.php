@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('sku')->unique(); // e.g., CPL-HP-90
             $table->string('description');   // e.g., High-Pressure Hydraulic Coupler
             $table->string('category');      // e.g., mechanical, tools
+            $table->decimal('unit_price', 12, 2)->default(0);
             
             $table->integer('stock_count')->default(0);
             $table->integer('safety_threshold')->default(5); // M
