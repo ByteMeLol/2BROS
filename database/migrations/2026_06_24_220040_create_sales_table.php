@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->foreignId('inventory_id')->nullable()->constrained('inventory')->nullOnDelete();
+            $table->foreignId('inventory_id')->nullable()->index();
             $table->string('invoice_number', 255)->unique();
             $table->string('billing_terms', 255);
             $table->integer('quantity')->default(1);
