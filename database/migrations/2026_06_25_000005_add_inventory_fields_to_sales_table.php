@@ -8,6 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (! Schema::hasTable('sales')) {
+            return;
+        }
+
+        if (Schema::hasColumn('sales', 'inventory_id')) {
+            return;
+        }
+
         Schema::table('sales', function (Blueprint $table) {
             $table->foreignId('inventory_id')->nullable()->after('company_id')->constrained('inventory')->nullOnDelete();
             $table->integer('quantity')->default(1)->after('billing_terms');
@@ -17,6 +25,10 @@ return new class extends Migration
 
     public function down(): void
     {
+        if (! Schema::hasTable('sales') || ! Schema::hasColumn('sales', 'inventory_id')) {
+            return;
+        }
+
         Schema::table('sales', function (Blueprint $table) {
             $table->dropConstrainedForeignId('inventory_id');
             $table->dropColumn(['quantity', 'unit_price']);
