@@ -13,6 +13,10 @@
 <body class="h-full font-sans antialiased text-gray-900" x-data="{ mobileSidebarOpen: false }">
 
     <div class="flex h-screen overflow-hidden">
+        @php
+            $hideSalesAndInventory = (int) session('company_id') === 2;
+            $hideInsurance = (int) session('company_id') === 1;
+        @endphp
         
         <aside 
             :class="mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
@@ -61,14 +65,16 @@
                     <i class="fa-solid fa-chart-pie w-5 text-center mr-3 text-blue-200 text-base"></i>
                     Dashboard
                 </a>
-                <a href="/sales" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('sales*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
-                    <i class="fa-solid fa-file-invoice-dollar w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
-                    Sales
-                </a>
-                <a href="/inventory" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('inventory*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
-                    <i class="fa-solid fa-store w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
-                    inventory
-                </a>
+                @unless($hideSalesAndInventory)
+                    <a href="/sales" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('sales*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
+                        <i class="fa-solid fa-file-invoice-dollar w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
+                        Sales
+                    </a>
+                    <a href="/inventory" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('inventory*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
+                        <i class="fa-solid fa-store w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
+                        inventory
+                    </a>
+                @endunless
                 <a href="/expenses" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('expenses*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
                     <i class="fa-solid fa-credit-card w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
                     Expenses
@@ -77,10 +83,12 @@
                     <i class="fa-solid fa-users w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
                     Customers
                 </a>
-                <a href="/insurance" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('insurance*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
-                    <i class="fa-solid fa-shield-halved w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
-                    Insurance
-                </a>
+                @unless($hideInsurance)
+                    <a href="/insurance" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('insurance*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
+                        <i class="fa-solid fa-shield-halved w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
+                        Insurance
+                    </a>
+                @endunless
                 <a href="/sms" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg {{ Request::is('sms*') ? 'bg-[#12b1df] text-white' : 'text-blue-100 hover:bg-[#12b1df]/50 hover:text-white' }} transition group">
                     <i class="fa-solid fa-comment-sms w-5 text-center mr-3 text-blue-300 group-hover:text-white text-base"></i>
                     Bulk SMS
@@ -97,12 +105,12 @@
                         <i class="fa-solid fa-user-plus w-5 text-center mr-3 text-blue-300 text-base"></i>
                         Add New User
                     </a>
+
+                    <a href="/settings" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ Request::is('settings*') ? 'bg-[#12b1df] text-white' : 'text-blue-200 hover:bg-[#12b1df]/30' }} transition">
+                        <i class="fa-solid fa-gear w-5 text-center mr-3 text-blue-300 text-base"></i>
+                        Settings
+                    </a>
                 @endif
-                
-                <a href="/settings" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ Request::is('settings*') ? 'bg-[#12b1df] text-white' : 'text-blue-200 hover:bg-[#12b1df]/30' }} transition">
-                    <i class="fa-solid fa-gear w-5 text-center mr-3 text-blue-300 text-base"></i>
-                    Settings
-                </a>
             </div>
         </aside>
 
